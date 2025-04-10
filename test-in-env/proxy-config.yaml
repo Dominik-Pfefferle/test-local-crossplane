@@ -4,33 +4,30 @@ metadata:
   name: proxy-config
   namespace: test-env
 data:
-  config.json: |-
-    user  nginx;
-    worker_processes  1;
-    error_log  /var/log/nginx/error.log warn;
-    pid        /var/run/nginx.pid;
-    events {
-        worker_connections  1024;
-    }
-    http {
-      include       /etc/nginx/mime.types;
-      default_type  application/octet-stream;
-      log_format  main  '$remote_addr - $remote_user [$time_local] "$request" '
-                          '$status $body_bytes_sent "$http_referer" '
-                          '"$http_user_agent" "$http_x_forwarded_for"';
-      access_log  /var/log/nginx/access.log  main;
-      sendfile        on;
-      keepalive_timeout  65;
-      server {
-        listen       8080;
-        listen  [::]:8080;
-        server_name  localhost;
-
-        location /healthz {
-          return 200;
+  nginx.conf: >2-
+        user  nginx;
+        worker_processes  1;
+        error_log  /var/log/nginx/error.log warn;
+        pid        /var/run/nginx.pid;
+        events {
+            worker_connections  1024;
         }
-#        location /ch1 {
-#          proxy_pass http://cluster-node-1.carlos-carlos-test-eu-central-1:7000/metrics;
-#        }
-      }
-    }
+        http {
+          include       /etc/nginx/mime.types;
+          default_type  application/octet-stream;
+          log_format  main  '$remote_addr - $remote_user [$time_local] "$request" '
+                              '$status $body_bytes_sent "$http_referer" '
+                              '"$http_user_agent" "$http_x_forwarded_for"';
+          access_log  /var/log/nginx/access.log  main;
+          sendfile        on;
+          keepalive_timeout  65;
+          server {
+            listen       8080;
+            listen  [::]:8080;
+            server_name  localhost;
+
+            location /healthz {
+              return 200;
+            }
+          }
+        }
