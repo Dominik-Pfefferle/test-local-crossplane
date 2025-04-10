@@ -43,7 +43,7 @@ spec:
               drop:
                 - ALL
         - name: aws
-          image: amazon/aws
+          image: amazon/aws-cli
           command: ["/bin/sh"]
           args: ["-c", "sleep 10000000"]
       volumes:
