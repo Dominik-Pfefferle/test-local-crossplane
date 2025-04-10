@@ -1,0 +1,66 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: proxy
+  namespace: test-env
+spec:
+  replicas: 1 # note there is also ..\..\overlays\eu-central-1-<env>\hpa-patch.yaml with minReplicas / maxReplicas definition
+  selector:
+    matchLabels:
+      app: proxy
+  strategy:
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: proxy
+    spec:
+      securityContext:
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+        - name: nginx
+          image: nginx:1.27
+          ports:
+            - containerPort: 8080
+          volumeMounts:
+            - name: nginx-config
+              mountPath: /etc/nginx/nginx.conf
+              subPath: nginx.conf
+            - name: cache
+              mountPath: /var/cache/nginx/
+            - name: logs
+              mountPath: /var/log/nginx/
+            - name: run
+              mountPath: /var/run/
+          securityContext: # more documentation: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/
+            runAsUser: 1001
+            runAsGroup: 1001
+            runAsNonRoot: true
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true # if writeable directories are needed, use volume mounts of "emptyDir"
+            capabilities:
+              drop:
+                - ALL
+      volumes:
+        - name: nginx-config
+          configMap:
+            name: proxy-config
+        - name: cache
+          emptyDir: {}
+        - name: logs
+          emptyDir: {}
+        - name: run
+          emptyDir: {}
+      affinity: # example https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#an-example-of-a-pod-that-uses-pod-affinity
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - weight: 100
+              podAffinityTerm:
+                labelSelector:
+                  matchExpressions:
+                    - key: app
+                      operator: In
+                      values:
+                        - redis
+                topologyKey: topology.kubernetes.io/zone # https://kubernetes.io/docs/reference/labels-annotations-taints/#topologykubernetesiozone
