@@ -1,10 +1,10 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: test-env
+  name: test-in-env
   namespace: argocd
   labels:
-    name: test-env
+    name: test-in-env
   annotations:
     argocd.argoproj.io/hook: Sync
     argocd.argoproj.io/sync-wave: "3"
