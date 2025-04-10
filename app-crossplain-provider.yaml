@@ -14,7 +14,7 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: git@hgithub.com/Dominik-Pfefferle/test-local-crossplane.git
+    repoURL: https://github.com/Dominik-Pfefferle/test-local-crossplane.git
     targetRevision: HEAD
     path: crossplane-providers
   destination:
@@ -26,5 +26,5 @@ spec:
       selfHeal: true
       allowEmpty: true
     syncOptions:
-    - CreateNamespace=true
+      - CreateNamespace=true
   revisionHistoryLimit: 10
