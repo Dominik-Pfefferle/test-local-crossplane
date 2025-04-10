@@ -7,8 +7,8 @@ spec:
   rules:
     - http:
         paths:
-          - pathType: Prefix
-            path: /proxy
+          - path: /proxy
+            pathType: ImplementationSpecific
             backend:
               service:
                 name: proxy
