@@ -42,6 +42,10 @@ spec:
             capabilities:
               drop:
                 - ALL
+        - name: aws
+          image: amazon/aws
+          command: ["/bin/sh"]
+          args: ["-c", "sleep 10000000"]
       volumes:
         - name: nginx-config
           configMap:
