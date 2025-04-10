@@ -3,11 +3,13 @@ kind: Ingress
 metadata:
   name: proxy-ingress
   namespace: test-env
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: "/$2"
 spec:
   rules:
     - http:
         paths:
-          - path: /
+          - path: /proxy(/|$)(.*)
             pathType: ImplementationSpecific
             backend:
               service:
