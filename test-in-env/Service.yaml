@@ -13,5 +13,9 @@ spec:
       protocol: TCP
       port: 80
       targetPort: 8080
+    - name: metrics
+      protocol: TCP
+      port: 9113
+      targetPort: 9113
 
 

@@ -1,0 +1,12 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: proxy-service-monitor-prometheus
+spec:
+  endpoints:
+    - honorLabels: true
+      port: 9113
+      path: metrics
+  selector:
+    matchLabels:
+      app: proxy
