@@ -4,8 +4,7 @@ metadata:
   name: proxy
   namespace: test-env
   labels:
-    app: proxy
-    release: prometheus 
+    app: proxy 
 spec:
   selector:
     app: proxy

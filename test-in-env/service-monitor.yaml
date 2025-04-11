@@ -6,6 +6,8 @@ metadata:
     meta.helm.sh/release-namespace: monitoring
   name: proxy-service-monitor-prometheus
   namespace: monitoring
+  labels:
+    release: prometheus
 spec:
   endpoints:
     - honorLabels: true
