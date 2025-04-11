@@ -5,7 +5,7 @@ metadata:
 spec:
   endpoints:
     - honorLabels: true
-      port: metric
+      port: metrics
       path: metrics
   selector:
     matchLabels:
