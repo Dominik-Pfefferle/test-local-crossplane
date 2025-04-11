@@ -3,6 +3,12 @@ kind: Application
 metadata:
   name: prometheus
   namespace: argocd
+  labels:
+    name: prometheus
+  annotations:
+    argocd.argoproj.io/hook: Sync
+    argocd.argoproj.io/sync-wave: "1"
+    argocd.argoproj.io/hook-delete-policy: HookFailed
 spec:
   project: default
   source:
