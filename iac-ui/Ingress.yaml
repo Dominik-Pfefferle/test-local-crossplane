@@ -18,10 +18,10 @@ spec:
           #      name: argocd-server
           #      port:
           #        number: 80
-          #- path: /argocd(/|$)(.*)
-          #  pathType: ImplementationSpecific
-          #  backend:
-          #    service:
-          #      name: argocd-server
-          #      port:
-          #        number: 80
+          - path: /argocd(/|$)(.*)
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: argocd-server
+                port:
+                  number: 80
