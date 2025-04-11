@@ -1,19 +1,19 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: proxy-ingress
-  namespace: test-env
+  name: argocd-ingress
+  namespace: argocd
   annotations:
     nginx.ingress.kubernetes.io/rewrite-target: "/$2"
 spec:
   rules:
     - http:
         paths:
-          - path: /proxy(/|$)(.*)
+          - path: /argocd(/|$)(.*)
             pathType: ImplementationSpecific
             backend:
               service:
-                name: proxy
+                name: argocd-server
                 port:
                   number: 80
 

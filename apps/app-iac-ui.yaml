@@ -1,10 +1,10 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: crossplane
+  name: app-iac-ui
   namespace: argocd
   labels:
-    name: crossplane
+    name: app-iac-ui
   annotations:
     argocd.argoproj.io/hook: Sync
     argocd.argoproj.io/sync-wave: "1"
@@ -14,12 +14,12 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: https://charts.crossplane.io/stable
-    targetRevision: "1.14.5"
-    chart: crossplane
+    repoURL: https://github.com/Dominik-Pfefferle/test-local-crossplane.git
+    targetRevision: HEAD
+    path: iac-ui
   destination:
     server: https://kubernetes.default.svc
-    namespace: crossplane-system
+    namespace: argocd
   syncPolicy:
     automated:
       prune: true
