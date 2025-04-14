@@ -11,7 +11,7 @@ metadata:
 spec:
   endpoints:
     - honorLabels: true
-      port: metrics
+      port: http
       path: /metrics
   selector:
     matchLabels:
