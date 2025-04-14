@@ -20,6 +20,6 @@ spec:
           type: RuntimeDefault
       containers:
         - name: server
-          image: localhost:5001/nodeexample:1
+          image: localhost:5001/nodeexample:2
           ports:
             - containerPort: 3000
