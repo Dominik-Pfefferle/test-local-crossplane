@@ -7,6 +7,6 @@ spec:
   capacity:
     storage: 10Gi
   accessModes:
-    - ReadWriteMany
+    - ReadWriteOncePod
   hostPath:
     path: "/var/lib/registry"

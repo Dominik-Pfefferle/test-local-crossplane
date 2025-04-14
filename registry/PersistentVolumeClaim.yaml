@@ -5,7 +5,7 @@ metadata:
   namespace: registry
 spec:
   accessModes:
-    - ReadWriteMany
+    - ReadWriteOncePod
   resources:
     requests:
       storage: 10Gi
