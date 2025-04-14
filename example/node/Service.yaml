@@ -7,7 +7,7 @@ metadata:
     app: example-node 
 spec:
   selector:
-    app: prexample-node
+    app: example-node
   ports:
     - name: http
       protocol: TCP
