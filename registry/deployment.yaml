@@ -20,3 +20,13 @@ spec:
           image: registry:3
           ports:
             - containerPort: 5000
+          env:
+          - name: REGISTRY_STORAGE_FILESYSTEM_ROOTDIRECTORY
+            value: "/var/lib/registry"
+          volumeMounts:
+          - name: registry-storage
+            mountPath: "/var/lib/registry"
+      volumes:
+      - name: registry-storage
+        persistentVolumeClaim:
+          claimName: registry-pvc
