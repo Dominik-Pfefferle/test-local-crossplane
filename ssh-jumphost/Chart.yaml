@@ -1,0 +1,8 @@
+apiVersion: v2
+description: Helm chart for deploying a ssh server jumphost to get access to resources inside private VPCs
+name: ssh-jumphost
+version: 0.0.1
+keywords:
+  - ssh
+  - jumphost
+  - private vpc

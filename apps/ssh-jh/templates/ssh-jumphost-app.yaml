@@ -1,0 +1,21 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: "{{$.Values.system.prefix}}-jh"
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/Dominik-Pfefferle/test-local-crossplane.git
+    targetRevision: {{$.Values.system.targetRevision}}
+    path: ssh-jumphost
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: example-jh
+  syncPolicy:
+    syncOptions:
+      - CreateNamespace=true
+    automated:
+      selfHeal: true
+      prune: true

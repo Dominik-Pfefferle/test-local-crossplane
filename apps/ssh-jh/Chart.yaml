@@ -1,0 +1,4 @@
+apiVersion: v2
+name: test-apps-chart
+description: Utilize chart for creating templates efficiently.
+version: v1

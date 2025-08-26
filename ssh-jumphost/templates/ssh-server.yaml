@@ -1,0 +1,93 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-jh
+  namespace: {{ .Release.Namespace }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{ .Release.Name }}-jh
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: {{ .Release.Name }}-jh
+    spec:
+      containers:
+        - env:
+            - name: PUBLIC_KEY_FILE
+              value: /etc/ssh/authorized_keys
+            - name: USER_NAME
+              value: admin
+            - name: PASSWORD_ACCESS
+              value: "false"
+            - name: SUDO_ACCESS
+              value: "true"
+            - name: USER_PASSWORD
+              value: unused
+          image: ghcr.io/linuxserver/openssh-server
+          imagePullPolicy: Always
+          name: sshd
+          ports:
+            - containerPort: 22
+              protocol: TCP
+            - containerPort: {{ .Values.proxyPort  }}
+              protocol: TCP
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+            - mountPath: /config/sshd/sshd_config
+              name: ssh-config
+              subPath: sshd_config
+            - mountPath: /etc/ssh/authorized_keys
+              name: ssh-config
+              subPath: authorized_keys
+      dnsPolicy: ClusterFirst
+      initContainers:
+        - args:
+            - |
+              mkdir -p /mnt/ssh;
+              echo "$SSHD_CONFIG" > /mnt/ssh/sshd_config;
+              echo "$AUTHORIZED_KEYS" > /mnt/ssh/authorized_keys;
+          command:
+            - /bin/sh
+            - -c
+          env:
+            - name: SSHD_CONFIG
+              value: |
+                Port 22
+                PermitRootLogin yes
+                PasswordAuthentication no
+                PubkeyAuthentication yes
+                AuthorizedKeysFile /etc/ssh/authorized_keys
+                ChallengeResponseAuthentication no
+                UsePAM no
+                LogLevel VERBOSE
+                AllowTcpForwarding yes
+                GatewayPorts yes
+                PermitTunnel yes
+            - name: AUTHORIZED_KEYS
+              value: {{- .Values.authorizedKeys | toYaml | indent 14 }}
+          image: busybox
+          imagePullPolicy: Always
+          name: init-ssh
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+            - mountPath: /mnt/ssh
+              name: ssh-config
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 30
+      volumes:
+        - emptyDir: {}
+          name: ssh-config
+
