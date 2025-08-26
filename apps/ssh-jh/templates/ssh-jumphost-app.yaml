@@ -2,13 +2,13 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: "{{$.Values.system.prefix}}-jh"
+  name: ssh-test
   namespace: argocd
 spec:
   project: default
   source:
     repoURL: https://github.com/Dominik-Pfefferle/test-local-crossplane.git
-    targetRevision: {{$.Values.system.targetRevision}}
+    targetRevision: HEAD
     path: ssh-jumphost
   destination:
     server: https://kubernetes.default.svc
