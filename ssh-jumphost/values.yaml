@@ -1,4 +1,3 @@
 proxyPort: 2222
 authorizedKeys: |
-                ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIL+3S5UwYzYeergqHY4Dk5zzYLUsVU0uLOKtWyEGluDF sebastian.schasse@nerdware.dev
-                ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINsLt7OOsmxYyJ5hy3vmpBBwc/imT4/77gxe6yavcW5L dominik.pfefferle
+  ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINsLt7OOsmxYyJ5hy3vmpBBwc/imT4/77gxe6yavcW5L dominik.pfefferle
